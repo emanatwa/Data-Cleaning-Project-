@@ -1,0 +1,17 @@
+WITH t1 as (
+SELECT * 
+, row_number() Over(
+					Partition by 
+					parcelid
+                    , landuse
+                    ,propertyaddress
+                    ,saledate
+                    ,saleprice
+                    ,LegalReference
+                    order by UniqueID
+                    ) as row_n
+FROM 2nd_project.nashville
+)
+SELECT COUNT( * ) AS dublicates
+FROM t1
+WHERE row_n > 1 
