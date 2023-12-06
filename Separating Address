@@ -1,0 +1,21 @@
+-- separating the owner's address into city, address & state using MySQL
+WITH t1 as 
+(
+SELECT SUBSTRING_INDEX(OwnerAddress, ',', -1) AS O_State
+, SUBSTRING_INDEX(OwnerAddress, ',', -2) AS City
+, SUBSTRING_INDEX(OwnerAddress, ',', 1) AS O_Address
+FROM 2nd_project.nashville
+)
+SELECT Address
+, substring_index(City, ',', 1) as O_City
+, State
+FROM t1;
+
+--------------
+
+-- separating the property address into city, address using MySQL
+
+SELECT PropertyAddress
+, SUBSTRING(PropertyAddress, 1, LOCATE(',' , PropertyAddress) -1) as P_Address
+, SUBSTRING(PropertyAddress, LOCATE(',' , PropertyAddress) +1, LOCATE(',' , PropertyAddress) +1) AS P_City
+FROM 2nd_project.nashville;
